@@ -1,7 +1,6 @@
-from fastapi import APIRouter, HTTPException, Body, Depends
-from typing import List, Optional
-from model import BookItem, UserSchema, UserLoginSchema
-from auth.jwt_handler import sign_jwt
+from fastapi import APIRouter, HTTPException, Depends
+from typing import List
+from model import BookItem
 from auth.jwt_bearer import JWTBearer
 
 books_router = APIRouter(
@@ -12,7 +11,7 @@ books_router = APIRouter(
 
 books = []
 
-@books_router.get("/books", response_model=List[BookItem])
+@books_router.get("/books", dependencies=[Depends(JWTBearer())], response_model=List[BookItem])
 def get_books():
     return books
 
@@ -27,14 +26,14 @@ def create_books(book: BookItem):
     books.append(book)
     return book
 
-@books_router.put("/books/{book_id}", response_model=BookItem)
+@books_router.put("/books/{book_id}", dependencies=[Depends(JWTBearer())], response_model=BookItem)
 def update_books(book_id: int , book: BookItem):
     if book_id < 0 or book_id >= len(books):
         raise HTTPException(status_code=404, detail="book not found")
     books[book_id] = book
     return book
 
-@books_router.delete("/books/{book_id}" ,response_model=BookItem)
+@books_router.delete("/books/{book_id}", dependencies=[Depends(JWTBearer())], response_model=BookItem)
 def delete_books(book_id: int):
     if book_id < 0 or book_id >= len(books):
         raise HTTPException(status_code=404, detail="book not found")

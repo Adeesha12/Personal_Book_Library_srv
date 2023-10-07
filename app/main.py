@@ -1,5 +1,4 @@
 import uvicorn
-# from routes import books_router,register_router
 from routes.books import books_router
 from routes.auth import register_router
 from fastapi import FastAPI, HTTPException
