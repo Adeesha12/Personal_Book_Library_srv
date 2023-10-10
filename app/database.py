@@ -4,10 +4,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.exc import OperationalError
 from typing import Annotated
+from decouple import config
 
 DB_NAME = 'fastapi_db'
-DB_USERNAME = 'postgres'
-DB_PASSWORD = 'mysecretpassword'
+DB_USERNAME = config("DB_USERNAME")
+DB_PASSWORD = config("DB_PASSWORD")
 DATABASE_URI = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@localhost:5432/{DB_NAME}'
 engine = create_engine(DATABASE_URI)
 try:
