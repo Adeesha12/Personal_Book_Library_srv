@@ -11,7 +11,7 @@ virtualenv env
 source env/bin/activate
 ```
 step 03
-create db for app and enter data on .env file undwe DB_name, DB_password, DB_username
+create db for app and enter data on .env file under  DB_password, DB_username
 
 
 step 04
