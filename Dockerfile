@@ -1,17 +1,23 @@
 # Use the official Python image as the base image
-FROM python:3.9
+FROM python:3.9-buster
 
-# Set the working directory in the container
-WORKDIR /app
+# make working directory in the container
+RUN mkdir -p /solution
 
-# Copy the requirements.txt file to the container
-COPY requirements.txt .
+
+# Copy the requirements.txt and .env file to the container
+COPY requirements.txt /solution
+COPY .env /solution
 
 # Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r solution/requirements.txt
 
 # Copy the FastAPI app files to the container
-COPY . .
+COPY app /solution/app
+RUN find /solution/app -type d -name "__pycache__" -exec rm -rf {} +
+
+# set working directory in the container
+WORKDIR /solution/app
 
 # Expose the port that FastAPI will run on
 EXPOSE 8000

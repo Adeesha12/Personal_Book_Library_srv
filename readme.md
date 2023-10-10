@@ -17,5 +17,5 @@ create db for app and enter data on .env file under  DB_password, DB_username
 step 04
 maviagte to Personal_Book_Library_srv/app and run the application
 ```bash
-
+uvicorn main:app --reload
 ```
