@@ -1,9 +1,14 @@
 import uvicorn
-from routes.books import books_router
-from routes.auth import register_router
 from fastapi import FastAPI, HTTPException
 from typing import List, Optional
-from model import BookItem
+
+from database import engine
+import models
+from routes.books import books_router
+from routes.auth import register_router
+
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.include_router(books_router)

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Body
-from model import  UserSchema, UserLoginSchema
+from schema import  UserSchema, UserLoginSchema
 from auth.jwt_handler import sign_jwt
 
 
