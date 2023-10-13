@@ -7,9 +7,16 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
   db:
-    image: postgres:latest
+    image: postgres
+    ports:
+      - "5432:5432"
     environment:
-      POSTGRES_DB: postgres
+      POSTGRES_DB: fastapi_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: mysecretpassword
