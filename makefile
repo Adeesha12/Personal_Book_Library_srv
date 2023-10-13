@@ -17,4 +17,4 @@ Docker_rerun:
 
 Docker_remove:
 	docker compose down
-	
+	docker rmi personal_book_library_srv-app
