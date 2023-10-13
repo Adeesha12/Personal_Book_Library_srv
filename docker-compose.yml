@@ -16,6 +16,7 @@ services:
     image: postgres
     ports:
       - "5432:5432"
+    # Change sample Username password and DB name 
     environment:
       POSTGRES_DB: fastapi_db
       POSTGRES_USER: postgres
