@@ -5,6 +5,9 @@ from database import get_db
 from schema import BookItem
 from auth.jwt_bearer import JWTBearer
 import models
+from utils.Logger import module_logger
+
+logger = module_logger(__name__)
 
 books_router = APIRouter(
     prefix="/v1/books",

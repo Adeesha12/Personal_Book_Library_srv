@@ -4,13 +4,13 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.exc import OperationalError
 from typing import Annotated
-from decouple import config
+from config import DB_NAME,DB_USERNAME,DB_PASSWORD,DB_HOST
 import time
 
-DB_NAME = 'fastapi_db'
-DB_USERNAME = config("DB_USERNAME")
-DB_PASSWORD = config("DB_PASSWORD")
-DB_HOST = config("DB_HOST",default='localhost')
+# DB_NAME = 'fastapi_db'
+# DB_USERNAME = config("DB_USERNAME")
+# DB_PASSWORD = config("DB_PASSWORD")
+# DB_HOST = config("DB_HOST",default='localhost')
 
 DATABASE_URI = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:5432/{DB_NAME}'
 
