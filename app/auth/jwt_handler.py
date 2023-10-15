@@ -2,8 +2,6 @@ import jwt
 import time
 from config import JWT_SECRET, JWT_ALGORITHM
 
-# JWT_SECRET = config("secret")
-# JWT_ALGORITHM = config("algorithm")
 
 # return genrated token
 def token_response(token: str):

@@ -12,7 +12,7 @@ COPY .env /solution
 # Install dependencies
 RUN pip install --no-cache-dir -r solution/requirements.txt
 
-# Copy the FastAPI app files to the container
+# Copy the FastAPI app files to the container and remove python cache
 COPY app /solution/app
 RUN find /solution/app -type d -name "__pycache__" -exec rm -rf {} +
 

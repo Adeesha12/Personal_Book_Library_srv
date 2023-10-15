@@ -7,10 +7,7 @@ from typing import Annotated
 from config import DB_NAME,DB_USERNAME,DB_PASSWORD,DB_HOST
 import time
 
-# DB_NAME = 'fastapi_db'
-# DB_USERNAME = config("DB_USERNAME")
-# DB_PASSWORD = config("DB_PASSWORD")
-# DB_HOST = config("DB_HOST",default='localhost')
+
 
 DATABASE_URI = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:5432/{DB_NAME}'
 
