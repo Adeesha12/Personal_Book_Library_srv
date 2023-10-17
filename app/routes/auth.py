@@ -1,24 +1,32 @@
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, HTTPException, Depends
 from schema import  UserSchema, UserLoginSchema
 from auth.jwt_handler import sign_jwt
-
+from database import get_db
+from typing import List, Annotated
+from sqlalchemy.orm import Session
+import models
 
 register_router = APIRouter(
     prefix="/v1/register",
     tags=["register"]
 )
 
-users = []
+
+db_dependancy = Annotated[Session, Depends(get_db)]
 
 @register_router.post("/user/signup")
-def user_signup(user:UserSchema = Body(default=None)) -> dict:
-    users.append(user)
+def user_signup(db:db_dependancy, user:UserSchema = Body(default=None)) -> dict:
+    db_user = models.Users(**user.model_dump())
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    db.close()
     return sign_jwt(user.email)
 
 
 @register_router.post("/user/login")
-def user_signup(user:UserLoginSchema = Body()) -> dict:
-    if check_user(user):
+def user_signup(db:db_dependancy, user:UserLoginSchema = Body()) -> dict:
+    if check_user(user,db):
         return sign_jwt(user.email)
     else:
         return {
@@ -26,9 +34,6 @@ def user_signup(user:UserLoginSchema = Body()) -> dict:
         }
         
         
-def check_user(data: UserLoginSchema):
-    for user in users:
-        if user.email == data.email and user.password == data.password:
-            return True
-        else:
-            return False
+def check_user(data: UserLoginSchema,db:db_dependancy):
+    return True if db.query(data).filter(models.Users.email==data.email,
+                                         models.Users.password==data.password).one() else False

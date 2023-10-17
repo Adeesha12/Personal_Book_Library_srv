@@ -15,7 +15,6 @@ books_router = APIRouter(
 )
 
 db_dependancy = Annotated[Session, Depends(get_db)]
-books = []
 
 @books_router.get("/books", dependencies=[Depends(JWTBearer())], response_model=List[BookItem])
 async def get_books(db:db_dependancy):
